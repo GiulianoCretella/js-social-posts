@@ -105,6 +105,7 @@ function stampaSocial(){
         
         const likesCounter = document.createElement('div');
         likesCounter.setAttribute('class','likes__counter');
+
         
         postMetaIcon.innerHTML =`
         <img class="profile-pic" src="${element.author.image}" alt="${element.author.name}"> 
@@ -118,14 +119,14 @@ function stampaSocial(){
         <img src="${element.media}" alt="">
         `;
         likesCta.innerHTML = `
-            <a class="like-button  js-like-button" href="#" data-postid="${element.id}">
+            <a class="like-button js-like-button" href="#${element.id}" data-postid="${element.id}">
                 <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                 <span class="like-button__label">Mi Piace</span>
             </a>
         `;
         likesCounter.innerHTML=`
-        Piace a <b id="like-counter-1" class="js-likes-counter">${element.likes}</b> persone`
-        
+        Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element.likes}</b> persone`;
+
         likesContainer.append(likesCta);
         likesContainer.append(likesCounter);
         postFooter.append(likesContainer);
@@ -138,9 +139,33 @@ function stampaSocial(){
         post.append(postFooter)
         mainContainer.append(post)
     });
+    const miPiace = document.querySelectorAll('.like-button');
+    console.log(miPiace)
+    const idArray=[]
+    for(let i = 0;i < miPiace.length;i++){
+        miPiace[i].addEventListener('click',()=>{
+            miPiace[i].classList.add('like-button--liked')
+            posts[i].likes += +1
+            const likesCounter=document.getElementById(`like-counter-${posts[i].id}`)
+            console.log(likesCounter)
+            likesCounter.innerHTML= `${posts[i].likes}`;
+            if(!idArray.includes(posts[i].id)){
+                idArray.push(posts[i].id)
+            }
+        })
+        
+    }
+    console.log(idArray);
+    
+    
+   
 }
 stampaSocial();
 
+
+
+// **Milestone 3** - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
+// Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 
 
 

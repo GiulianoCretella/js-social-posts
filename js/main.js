@@ -108,7 +108,7 @@ function stampaSocial(){
 
         
         postMetaIcon.innerHTML =`
-        <img class="profile-pic" src="${element.author.image}" alt="${element.author.name}"> 
+        <img class="profile-pic" src="${element.author.image}" alt="${element.author.name[0]}"> 
         `;
         postMetaData.innerHTML =`
             <div class="post-meta__author">${element.author.name}</div>
@@ -144,18 +144,32 @@ function stampaSocial(){
     const idArray=[]
     for(let i = 0;i < miPiace.length;i++){
         miPiace[i].addEventListener('click',()=>{
-            miPiace[i].classList.add('like-button--liked')
-            posts[i].likes += +1
-            const likesCounter=document.getElementById(`like-counter-${posts[i].id}`)
-            console.log(likesCounter)
-            likesCounter.innerHTML= `${posts[i].likes}`;
-            if(!idArray.includes(posts[i].id)){
-                idArray.push(posts[i].id)
+
+            if (miPiace[i].classList.contains('like-button--liked')){
+                miPiace[i].classList.remove('like-button--liked')
+                posts[i].likes += -1
+                const likesCounter=document.getElementById(`like-counter-${posts[i].id}`)
+                likesCounter.innerHTML= `${posts[i].likes}`;
+            } else {
+                miPiace[i].classList.add('like-button--liked')
+                posts[i].likes += +1
+                const likesCounter=document.getElementById(`like-counter-${posts[i].id}`)
+                console.log(likesCounter)
+                likesCounter.innerHTML= `${posts[i].likes}`;
+                if(!idArray.includes(posts[i].id)){
+                    idArray.push(posts[i].id)
+                }
+                console.log(idArray);
             }
+
+            
+            
+            
         })
         
     }
-    console.log(idArray);
+    
+  
     
     
    

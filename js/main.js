@@ -106,20 +106,30 @@ function stampaSocial(){
         const likesCounter = document.createElement('div');
         likesCounter.setAttribute('class','likes__counter');
 
+        let userImage;
+        if(element.author.image===null){
+            userImage= `
+            <div class= "profile-pic-default">
+            <span>${element.author.name.charAt(0)+element.author.name.charAt(5)}</span>
+            </div>`;
+
+        }else{
+            userImage = `<img class="profile-pic" src="${element.author.image}" alt="${element.author.name}">`
+        }
+        console.log(userImage);
         
-        postMetaIcon.innerHTML =`
-        <img class="profile-pic" src="${element.author.image}" alt="${element.author.name[0]}"> 
-        `;
+        postMetaIcon.innerHTML = userImage
+        
         postMetaData.innerHTML =`
             <div class="post-meta__author">${element.author.name}</div>
-            <div class="post-meta__time">${element.created}</div>
+            <div class="post-meta__time">${new Date(element.created).toLocaleDateString()}</div>
             `;
         postText.innerHTML =`${element.content}`;
         postImage.innerHTML =`
         <img src="${element.media}" alt="">
         `;
         likesCta.innerHTML = `
-            <a class="like-button js-like-button" href="#${element.id}" data-postid="${element.id}">
+            <a class="like-button js-like-button" href="#" data-postid="${element.id}">
                 <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                 <span class="like-button__label">Mi Piace</span>
             </a>
@@ -143,7 +153,8 @@ function stampaSocial(){
     console.log(miPiace)
     const idArray=[]
     for(let i = 0;i < miPiace.length;i++){
-        miPiace[i].addEventListener('click',()=>{
+        miPiace[i].addEventListener('click',(evento)=>{
+            evento.preventDefault();
 
             if (miPiace[i].classList.contains('like-button--liked')){
                 miPiace[i].classList.remove('like-button--liked')
@@ -153,25 +164,17 @@ function stampaSocial(){
             } else {
                 miPiace[i].classList.add('like-button--liked')
                 posts[i].likes += +1
-                const likesCounter=document.getElementById(`like-counter-${posts[i].id}`)
+                const likesCounter= document.getElementById(`like-counter-${posts[i].id}`)
                 console.log(likesCounter)
-                likesCounter.innerHTML= `${posts[i].likes}`;
+                likesCounter.innerHTML= posts[i].likes;
                 if(!idArray.includes(posts[i].id)){
                     idArray.push(posts[i].id)
                 }
                 console.log(idArray);
             }
-
-            
-            
-            
         })
         
     }
-    
-  
-    
-    
    
 }
 stampaSocial();

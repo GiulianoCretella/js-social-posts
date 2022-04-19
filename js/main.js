@@ -108,7 +108,7 @@ function stampaSocial(){
 
         function getInitials(name){
         const nameParts= name.split(' ');
-        const initials = nameParts[0].charAt(0) + nameParts[1].charAt(0)
+        const initials = nameParts[0].charAt(0) + nameParts[1].charAt(0);
         return initials.toUpperCase();
         }
 
@@ -168,6 +168,10 @@ function stampaSocial(){
                 posts[i].likes += -1
                 const likesCounter=document.getElementById(`like-counter-${posts[i].id}`)
                 likesCounter.innerHTML= `${posts[i].likes}`;
+                const index = idArray.indexOf(posts[i].id)
+                if (index !== -1){
+                    idArray.splice(index,1)
+                }
             } else {
                 miPiace[i].classList.add('like-button--liked')
                 posts[i].likes += +1

@@ -106,19 +106,26 @@ function stampaSocial(){
         const likesCounter = document.createElement('div');
         likesCounter.setAttribute('class','likes__counter');
 
+        function getInitials(name){
+        const nameParts= name.split(' ');
+        const initials = nameParts[0].charAt(0) + nameParts[1].charAt(0)
+        return initials.toUpperCase();
+        }
+
         let userImage;
         if(element.author.image===null){
             userImage= `
             <div class= "profile-pic-default">
-            <span>${element.author.name.charAt(0)+element.author.name.charAt(5)}</span>
+            <span>${getInitials(element.author.name)}</span>
             </div>`;
 
         }else{
             userImage = `<img class="profile-pic" src="${element.author.image}" alt="${element.author.name}">`
         }
+
         console.log(userImage);
         
-        postMetaIcon.innerHTML = userImage
+        postMetaIcon.innerHTML = userImage;
         
         postMetaData.innerHTML =`
             <div class="post-meta__author">${element.author.name}</div>
